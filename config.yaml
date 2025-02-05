@@ -1,0 +1,48 @@
+UPLOAD_SPLIT: "train"
+
+# List of Hugging Face datasets to process
+dataset_list:
+  - "atlasia/Youtube-Commons-Morocco-Darija-35h"
+
+batch_size: 128
+
+# Define annotation guidelines with detailed descriptions for each field and question
+ANNOTATION_GUIDELINES: |
+  Annotation Guidelines:
+
+  1. Transcription Quality:
+    - Rate the quality of the transcription based on the following scale:
+      • 0: Incorrect – The transcription does not accurately represent the spoken content.
+      • 1: Partially Correct – The transcription is mostly correct but contains minor misspellings or errors.
+      • 2: Totally Correct – The transcription is exactly as spoken.
+    
+  2. Corrected Transcription:
+    - If the transcription quality is rated as 0 or 1, please provide the corrected transcription.
+    - This field is pre-filled with the original transcription. Only modify it if corrections are needed.
+    - Please use code-switching when necessary.
+    
+  3. Speaker Gender:
+    - Select the gender of the speaker as perceived from the audio.
+    - Options: Male, Female.
+    
+  4. Emotion / Sentiment:
+    - Assess the emotional tone or sentiment expressed in the audio.
+    - Options: Very Positive, Positive, Neutral, Negative, Very Negative, Other.
+    
+  5. Utterance Intent:
+    - Identify the intent behind the utterance.
+    - Options: Question, Informative/Statement, Command, Other.
+    
+  6. Background Noise Level:
+    - Evaluate the level of background noise present in the audio.
+    - Options: None, Low, Moderate, High.
+    
+  7. Speaker Clarity:
+    - Determine how clear the speaker’s voice is.
+    - Options: Clear, Somewhat Clear, Muffled/Unclear.
+    
+  8. Speaker Count:
+    - Indicate whether the audio contains a single speaker or multiple speakers.
+    - Options: Single Speaker, Multiple Speakers.
+
+  Please listen carefully to the audio and use the structured options to ensure consistent annotations.

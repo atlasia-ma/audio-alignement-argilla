@@ -30,12 +30,14 @@ def prepare_audio_for_argilla(example):
 
 if __name__ == "__main__":
     load_dotenv()
+    DATA_PATH = "atlasia/Youtube-Commons-Morocco-Darija-35h"
+    
     API_KEY = os.environ["ARGILLA_KEY"]
     HF_API_KEY = os.environ["HF_API_KEY"]
 
     # Initialize Argilla with your API key
     client=rg.Argilla.deploy_on_spaces(api_key=API_KEY,repo_name="Audio-Alignement-Argilla")
-    dataset=load_dataset("atlasia/Youtube-Commons-Morocco-Darija-35h",split="train",token=HF_API_KEY).select_columns(["audio","transcription"]).select(range(10))
+    dataset=load_dataset(DATA_PATH,split="train",token=HF_API_KEY).select_columns(["audio","transcription"]).select(range(10))
     #dataset=dataset.map(prepare_audio_for_argilla)
     processed_records = []
     for i, example in tqdm(enumerate(dataset),total=len(dataset)):
