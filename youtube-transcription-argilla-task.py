@@ -12,14 +12,19 @@ def prepare_audio_for_argilla(example):
     Prepares audio data for logging to Argilla by writing the audio to a file,
     converting it to an HTML snippet using `audio_to_html`, and returning the processed record.
     """
-    record_id = example["id"]
+    record_id = example["id"] # created in the map function before calling this function
     audio_info = example["audio"]
-    # Use a unique filename for each audio record
-    file_name = f"./tmp/audio_{record_id}.mp3"
+    
     audio_array = audio_info["array"]
     sample_rate = audio_info["sampling_rate"]
     
-    # Write the audio data to a file if it d
+    # create directory if it doesn't exist
+    os.makedirs('tmp', exist_ok=True)
+    
+    # Use a unique filename for each audio record
+    file_name = f"./tmp/audio_{record_id}.mp3"
+    
+    # Write the audio data to a file if it doesn't already exist
     if not os.path.exists(file_name):
         sf.write(file_name, audio_array, sample_rate)
     
@@ -77,6 +82,18 @@ if __name__ == "__main__":
                 required=False
             ),
             rg.LabelQuestion(
+                name="with_code_switching",
+                title="Code Switching",
+                labels=["True", "False"],
+                required=True
+            ),
+            rg.LabelQuestion(
+                name="with_pauses_hesitations",
+                title="Pauses/hesitations presence (um, uh, etc.)",
+                labels=["True", "False"],
+                required=True
+            ),
+            rg.LabelQuestion(
                 name="speaker_gender",
                 title="Speaker Gender",
                 labels=["Male", "Female"],
@@ -126,7 +143,7 @@ if __name__ == "__main__":
             token=HF_TOKEN
         )
         # prepare dataset
-        hf_dataset = hf_dataset.map(lambda example, idx: {"id": idx}, with_indices=True)
+        hf_dataset = hf_dataset.map(lambda _, idx: {"id": idx}, with_indices=True, desc="Adding record IDs")
         # create Argilla dataset       
         dataset = rg.Dataset(
             name=f"{argilla_dataset_name}",
@@ -137,9 +154,10 @@ if __name__ == "__main__":
         
         # prepare data for Argilla
         processed_records = []
-        for example in tqdm(hf_dataset, total=len(hf_dataset)):
+        for example in tqdm(hf_dataset, total=len(hf_dataset), desc=f"Preparing data for Argilla: {argilla_dataset_name}"):
             processed_record = prepare_audio_for_argilla(example)
             processed_records.append(processed_record)
+            
         # put data in records
         dataset.records.log(
             records=processed_records,
