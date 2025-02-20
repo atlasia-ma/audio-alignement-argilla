@@ -15,7 +15,7 @@ def prepare_audio_for_argilla(example):
     record_id = example["id"]
     audio_info = example["audio"]
     # Use a unique filename for each audio record
-    file_name = f"./tmp/audio_{record_id}.wav"
+    file_name = f"./tmp/audio_{record_id}.mp3"
     audio_array = audio_info["array"]
     sample_rate = audio_info["sampling_rate"]
     
