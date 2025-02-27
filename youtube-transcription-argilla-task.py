@@ -74,16 +74,22 @@ if __name__ == "__main__":
                 name="transcription_quality",
                 title="How good is the transcription? \n(0: Incorrect, 1: Partially Correct, 2: Totally Correct)",
                 values=[0, 1, 2],
-                required=True
+                required=False
             ),
             rg.TextQuestion(
                 name="corrected_transcription",
                 title="Provide the correct transcription if needed (only required if rating is 0 or 1)",
-                required=False
+                required=True
             ),
             rg.LabelQuestion(
                 name="with_code_switching",
-                title="Code Switching",
+                title="Code Switching (MSA not counted)",
+                labels=["True", "False"],
+                required=True
+            ),
+            rg.LabelQuestion(
+                name="with_msa",
+                title="Includes MSA",
                 labels=["True", "False"],
                 required=True
             ),
@@ -103,13 +109,13 @@ if __name__ == "__main__":
                 name="emotion_sentiment",
                 title="Emotion / Sentiment",
                 labels=["Very Positive", "Positive", "Neutral", "Negative", "Very Negative", "Other"],
-                required=True
+                required=False
             ),
             rg.LabelQuestion(
                 name="background_noise",
                 title="Background Noise Level",
                 labels=["None", "Low", "Moderate", "High"],
-                required=True
+                required=False
             ),
             rg.LabelQuestion(
                 name="intent",

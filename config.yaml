@@ -2,7 +2,7 @@ UPLOAD_SPLIT: "train"
 
 # List of Hugging Face datasets to process
 dataset_list:
-  - "atlasia/Youtube-Commons-Morocco-Darija-35h"
+  - "BounharAbdelaziz/Youtube-Commons-Morocco-Darija-35h-Fixed-v2"
 
 batch_size: 128
 
@@ -19,23 +19,35 @@ ANNOTATION_GUIDELINES: |
   2. Corrected Transcription:
     - If the transcription quality is rated as 0 or 1, please provide the corrected transcription.
     - This field is pre-filled with the original transcription. Only modify it if corrections are needed.
-    - Please use code-switching when necessary.
+    - Please use code-switching when necessary, i.e. if audio contains code switching, please write with code switching!
+
+  3. Code Switching (MSA not counted):
+    - Weither audio contains code switching. Here Modern Standard Arabic (MSA) is not considered as code switching.
+    - Options: True, False.
+
+  4. Includes MSA:
+    - Weither audio contains MSA
+    - Options: True, False.
+  
+  5. Pauses/hesitations presence (um, uh, etc.):
+    - If audio contains hesitations (um, uh, etc.)
+    - Options: True, False.
     
-  3. Speaker Gender:
+  6. Speaker Gender:
     - Select the gender of the speaker as perceived from the audio.
     - Options: Male, Female.
     
-  4. Emotion / Sentiment:
+  7. Emotion / Sentiment:
     - Assess the emotional tone or sentiment expressed in the audio.
     - Options: Very Positive, Positive, Neutral, Negative, Very Negative, Other.
     
+  8. Background Noise Level:
+    - Evaluate the level of background noise present in the audio.
+    - Options: None, Low, Moderate, High.
+
   5. Utterance Intent:
     - Identify the intent behind the utterance.
     - Options: Question, Informative/Statement, Command, Other.
-    
-  6. Background Noise Level:
-    - Evaluate the level of background noise present in the audio.
-    - Options: None, Low, Moderate, High.
     
   7. Speaker Clarity:
     - Determine how clear the speaker’s voice is.
@@ -46,3 +58,4 @@ ANNOTATION_GUIDELINES: |
     - Options: Single Speaker, Multiple Speakers.
 
   Please listen carefully to the audio and use the structured options to ensure consistent annotations.
+  If audio contains code switching, please write with code switching!
